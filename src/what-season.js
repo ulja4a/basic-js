@@ -12,6 +12,11 @@ const { NotImplementedError } = require('../extensions/index.js');
  * 
  */
 function getSeason(date) {
+  let newDateformat = new Date(date);
+  newDateformat.setDate(newDateformat.getDate());
+  console.log(newDateformat);
+  console.log(date);
+ 
   const warning = 'Unable to determine the time of year!';
   const winter = 'winter';
   const autumn = 'autumn';
@@ -25,10 +30,12 @@ function getSeason(date) {
     throw new Error('Invalid date!');
   }
   
-  let newDate = new Date(date);
+  if (!(date instanceof Date)) {
+    throw new Error('Invalid date!');
+  }
  
   
-  let currentMonth = newDate.getMonth();
+  let currentMonth = date.getMonth();
   if (currentMonth==11 || currentMonth<2) {
     return winter;
   }
