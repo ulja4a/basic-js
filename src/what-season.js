@@ -23,14 +23,12 @@ function getSeason(date) {
   const summer = 'summer';
   const spring = 'spring';
   
+  
+  
   if (!date) {
     return warning;
   }
   if (!(date instanceof Date) || isNaN(date.getTime())) {
-    throw new Error('Invalid date!');
-  }
-  
-  if (!(date instanceof Date)) {
     throw new Error('Invalid date!');
   }
  
