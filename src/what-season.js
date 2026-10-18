@@ -12,11 +12,6 @@ const { NotImplementedError } = require('../lib');
  *
  */
 function getSeason(date) {
-  let newDateformat = new Date(date);
-  newDateformat.setDate(newDateformat.getDate());
-  console.log(newDateformat);
-  console.log(date);
- 
   const warning = 'Unable to determine the time of year!';
   const winter = 'winter';
   const autumn = 'autumn';
@@ -28,9 +23,15 @@ function getSeason(date) {
   if (!date) {
     return warning;
   }
-  if (!(date instanceof Date) || isNaN(date.getTime())) {
+  try {
+  const time = Date.prototype.getTime.call(date);
+
+  if (Number.isNaN(time)) {
     throw new Error('Invalid date!');
   }
+} catch (error) {
+  throw new Error('Invalid date!');
+}
  
   
   let currentMonth = date.getMonth();
