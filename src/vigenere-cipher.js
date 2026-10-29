@@ -20,14 +20,63 @@ const { NotImplementedError } = require('../lib');
  *
  */
 class VigenereCipheringMachine {
-  encrypt() {
-    // Remove line below and write your code here
-    throw new NotImplementedError('Not implemented');
+  constructor(direct = true) {
+    this.direct = direct;
+  }
+  encrypt(message, key) {
+    if (!message || !key) {
+      throw new Error('Incorrect arguments!');
+    }
+    const upperMessage = message.toUpperCase();
+    const upperKey = key.toUpperCase();
+    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let result = '';
+    let keyPosition = 0;
+    for (let i = 0; i < upperMessage.length; i++) {
+      const letterIndex = alphabet.indexOf(upperMessage[i]);
+      if (letterIndex === -1) {
+        result += upperMessage[i];
+        continue;
+      }
+      const keyIndex = alphabet.indexOf(upperKey[keyPosition % upperKey.length]);
+      const shiftedIndex = (letterIndex + keyIndex) % 26;
+      const encryptedLetter = alphabet[shiftedIndex];
+      result += encryptedLetter;
+      keyPosition += 1;
+    }
+    if (this.direct === false) {
+      return result.split('').reverse().join('');
+    } else {
+      return result;
+    }
   }
 
-  decrypt() {
-    // Remove line below and write your code here
-    throw new NotImplementedError('Not implemented');
+  decrypt(message, key) {
+    if (!message || !key) {
+      throw new Error('Incorrect arguments!');
+    }
+    const upperMessage = message.toUpperCase();
+    const upperKey = key.toUpperCase();
+    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let result = '';
+    let keyPosition = 0;
+    for (let i = 0; i < upperMessage.length; i++) {
+      const letterIndex = alphabet.indexOf(upperMessage[i]);
+      if (letterIndex === -1) {
+        result += upperMessage[i];
+        continue;
+      }
+      const keyIndex = alphabet.indexOf(upperKey[keyPosition % upperKey.length]);
+      const shiftedIndex = (letterIndex - keyIndex + 26) % 26;
+      const encryptedLetter = alphabet[shiftedIndex];
+      result += encryptedLetter;
+      keyPosition += 1;
+    }
+    if (this.direct === false) {
+      return result.split('').reverse().join('');
+    } else {
+      return result;
+    }
   }
 }
 
